@@ -29,7 +29,9 @@ function Login() {
     // Create axios instance with timeout
     const axiosInstance = axios.create({
       timeout: 10000, // 10 second timeout
-      baseURL: process.env.NODE_ENV === 'production' ? '' : 'http://localhost:5000'
+      baseURL: process.env.NODE_ENV === 'production' 
+        ? 'https://hardware-selection-system.onrender.com' 
+        : 'http://localhost:5000'
     });
 
     try {
