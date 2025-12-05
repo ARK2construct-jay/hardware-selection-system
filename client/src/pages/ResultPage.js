@@ -17,7 +17,12 @@ function ResultPage() {
           return;
         }
 
-        const response = await axios.post('/api/data/fetch', selectionData);
+        const axiosInstance = axios.create({
+          baseURL: process.env.NODE_ENV === 'production' 
+            ? 'https://hardware-selection-system.onrender.com' 
+            : 'http://localhost:5000'
+        });
+        const response = await axiosInstance.post('/api/data/fetch', selectionData);
         setResults(response.data);
       } catch (error) {
         setError('Failed to fetch results');

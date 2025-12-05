@@ -25,7 +25,12 @@ function Register() {
     setSuccess('');
 
     try {
-      await axios.post('/api/auth/register', formData);
+      const axiosInstance = axios.create({
+        baseURL: process.env.NODE_ENV === 'production' 
+          ? 'https://hardware-selection-system.onrender.com' 
+          : 'http://localhost:5000'
+      });
+      await axiosInstance.post('/api/auth/register', formData);
       setSuccess('Registration successful! Redirecting to login...');
       setTimeout(() => navigate('/login'), 2000);
     } catch (error) {
