@@ -1,11 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function MainPage() {
   const [selectedBrand, setSelectedBrand] = useState('');
   const [selectedHardware, setSelectedHardware] = useState('');
   const [selectedLocation, setSelectedLocation] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+  // Verify authentication and reset state on component mount
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      navigate('/login');
+    } else {
+      // Reset all selections when component mounts (fresh login)
+      setSelectedBrand('');
+      setSelectedHardware('');
+      setSelectedLocation('');
+      setLoading(false);
+    }
+  }, [navigate]);
 
   const brands = ['Allegion', 'Assa Abloy', 'Hager', 'Best/Dormakaba', 'PDQ-Cal Royal'];
 
@@ -75,6 +90,8 @@ function MainPage() {
   };
 
   const handleSubmit = () => {
+    setLoading(true);
+    
     const selectionData = {
       brand: selectedBrand,
       hardwareType: selectedHardware,
@@ -82,13 +99,27 @@ function MainPage() {
     };
     
     localStorage.setItem('selectionData', JSON.stringify(selectionData));
-    navigate('/results');
+    
+    // Small delay to show loading state
+    setTimeout(() => {
+      navigate('/results');
+    }, 500);
   };
 
   const handleLogout = () => {
+    // Clear all localStorage data
     localStorage.removeItem('token');
     localStorage.removeItem('user');
-    navigate('/login');
+    localStorage.removeItem('selectionData');
+    
+    // Reset all state
+    setSelectedBrand('');
+    setSelectedHardware('');
+    setSelectedLocation('');
+    setLoading(false);
+    
+    // Force page reload to ensure clean state
+    window.location.href = '/login';
   };
 
   const canSubmit = selectedBrand && selectedHardware && 
@@ -149,8 +180,8 @@ function MainPage() {
       )}
 
       {canSubmit && (
-        <button onClick={handleSubmit} className="btn">
-          Get Results
+        <button onClick={handleSubmit} className={`btn ${loading ? 'loading' : ''}`} disabled={loading}>
+          {loading ? 'Loading Results...' : 'Get Results'}
         </button>
       )}
     </div>
