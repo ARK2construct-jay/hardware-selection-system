@@ -87,6 +87,12 @@ function ResultPage() {
             </table>
           </div>
           
+          <div className="note-container" style={{marginTop: '20px', padding: '15px', backgroundColor: '#f8f9fa', border: '1px solid #dee2e6', borderRadius: '4px'}}>
+            <p style={{margin: '0', fontStyle: 'italic', color: '#6c757d'}}>
+              <strong>Note:</strong> The highlighted products require prep in the door/frame.
+            </p>
+          </div>
+          
           <button onClick={handleBack} className="btn" style={{marginTop: '20px'}}>
             Back to Selection
           </button>

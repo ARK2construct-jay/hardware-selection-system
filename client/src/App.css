@@ -194,3 +194,23 @@
   border-radius: 4px;
   margin: 10px 0;
 }
+
+.note-container {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  text-align: left;
+}
+
+.note-container p {
+  margin: 0;
+  font-style: italic;
+  color: #6c757d;
+  font-size: 14px;
+}
+
+.note-container strong {
+  color: #495057;
+}
