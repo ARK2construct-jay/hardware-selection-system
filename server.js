@@ -20,7 +20,11 @@ const app = express();
 // Middleware
 app.use(cors({
   origin: process.env.NODE_ENV === 'production' 
-    ? [process.env.FRONTEND_URL || 'https://hardware-selection-system.netlify.app', 'https://*.netlify.app']
+    ? [
+        'https://ark2construct-jay.github.io',
+        'https://hardware-selection-system.netlify.app', 
+        'https://*.netlify.app'
+      ]
     : ['http://localhost:3000', 'http://127.0.0.1:3000'],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
